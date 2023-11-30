@@ -2254,7 +2254,7 @@ textarea.input {
   }
 
   .title_h1 {
-    font-size: 1.75rem;
+    font-size: 1.625rem;
   }
 
   .title_h2 {
@@ -2903,10 +2903,12 @@ textarea.input {
 @media (max-width: 29.99875em) {
   .title_h1 {
     letter-spacing: 0.0525em;
+    translate: 0 0.625rem;
   }
 
   .title_h2 {
     letter-spacing: 0.045em;
+    translate: 0 0.625rem;
   }
 
   .item-sale .title_h3 {
@@ -3746,15 +3748,15 @@ textarea.input {
     }
 }
 
-@supports (font-size: clamp( 1.75rem , -0.1206896552rem  +  3.0172413793vw , 3.5rem )) {
+@supports (font-size: clamp( 1.625rem , -0.3793103448rem  +  3.2327586207vw , 3.5rem )) {
     .title_h1 {
-      font-size: clamp( 1.75rem , -0.1206896552rem  +  3.0172413793vw , 3.5rem );
+      font-size: clamp( 1.625rem , -0.3793103448rem  +  3.2327586207vw , 3.5rem );
     }
 }
 
-@supports not (font-size: clamp( 1.75rem , -0.1206896552rem  +  3.0172413793vw , 3.5rem )) {
+@supports not (font-size: clamp( 1.625rem , -0.3793103448rem  +  3.2327586207vw , 3.5rem )) {
     .title_h1 {
-      font-size: calc(1.75rem + 1.75 * (100vw - 62rem) / 58);
+      font-size: calc(1.625rem + 1.875 * (100vw - 62rem) / 58);
     }
 }
 
