@@ -3743,9 +3743,10 @@
         }));
     };
     function videoGenerate(video) {
-        const btn = video.querySelector(".video-btn"), videoId = btn.dataset.videoId, container = video.querySelector(".video-block__inner");
+        const btn = video.querySelector(".video-btn"), videoId = btn.dataset.videoId, container = video.querySelector(".video-block__inner"), containerParent = video.querySelector(".video-block__inner").parentElement.parentElement.parentElement;
         btn.addEventListener("click", (() => {
             const iframe = iframeGenerate(videoId);
+            containerParent.classList.add("_no-bg");
             container.innerHTML = "";
             container.appendChild(iframe);
         }));
