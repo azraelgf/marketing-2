@@ -2937,10 +2937,11 @@ textarea.input {
 
   .accent-title {
     padding-top: 1.75rem;
+    padding-bottom: 0.3125rem;
   }
 
   .menu__title {
-    padding: 1.75rem 0.625rem 1.25rem;
+    padding: 1.75rem 0.625rem 0.3125rem;
   }
 
   .menu__list {
