@@ -437,25 +437,6 @@
             functions_FLS(`[gotoBlock]: Юхуу...їдемо до ${targetBlock}`);
         } else functions_FLS(`[gotoBlock]: Йой... Такого блоку немає на сторінці: ${targetBlock}`);
     };
-    function formQuantity() {
-        document.addEventListener("click", (function(e) {
-            let targetElement = e.target;
-            if (targetElement.closest("[data-quantity-plus]") || targetElement.closest("[data-quantity-minus]")) {
-                const valueElement = targetElement.closest("[data-quantity]").querySelector("[data-quantity-value]");
-                let value = parseInt(valueElement.value);
-                if (targetElement.hasAttribute("data-quantity-plus")) {
-                    value++;
-                    if (+valueElement.dataset.quantityMax && +valueElement.dataset.quantityMax < value) value = valueElement.dataset.quantityMax;
-                } else {
-                    --value;
-                    if (+valueElement.dataset.quantityMin) {
-                        if (+valueElement.dataset.quantityMin > value) value = valueElement.dataset.quantityMin;
-                    } else if (value < 1) value = 1;
-                }
-                targetElement.closest("[data-quantity]").querySelector("[data-quantity-value]").value = value;
-            }
-        }));
-    }
     function ssr_window_esm_isObject(obj) {
         return obj !== null && typeof obj === "object" && "constructor" in obj && obj.constructor === Object;
     }
@@ -3736,6 +3717,49 @@
     }
     const da = new DynamicAdapt("max");
     da.init();
+    document.addEventListener("click", documentActions);
+    function documentActions(e) {
+        const targetElement = e.target;
+        if (targetElement.closest(".quantity__button")) {
+            qa(targetElement);
+            calcCartPrice();
+        }
+        if (targetElement.closest('.options__input[name="photo"]')) {
+            changeAmount();
+            qa(targetElement);
+            calcCartPrice();
+        }
+    }
+    function qa(targetElement) {
+        if (targetElement.closest("[data-quantity-plus]") || targetElement.closest("[data-quantity-minus]")) {
+            const valueElement = targetElement.closest("[data-quantity]").querySelector("[data-quantity-value]");
+            let value = parseInt(valueElement.value);
+            if (targetElement.hasAttribute("data-quantity-plus")) {
+                value++;
+                if (+valueElement.dataset.quantityMax && +valueElement.dataset.quantityMax < value) value = valueElement.dataset.quantityMax;
+            } else {
+                --value;
+                if (+valueElement.dataset.quantityMin) {
+                    if (+valueElement.dataset.quantityMin > value) value = valueElement.dataset.quantityMin;
+                } else if (value < 1) value = 0;
+            }
+            targetElement.closest("[data-quantity]").querySelector("[data-quantity-value]").value = value;
+        }
+    }
+    function calcCartPrice() {
+        const cartItems = document.querySelectorAll(".item-calc-js");
+        let totalPriceAmount = 0;
+        cartItems.forEach((item => {
+            const amountEl = parseInt(item.querySelector(".js-price").textContent), valueElement = parseInt(item.querySelector("[data-quantity-value]").value), totalPrice = document.querySelector(".js-total span"), currentPrice = valueElement * amountEl;
+            totalPriceAmount += currentPrice;
+            totalPrice.innerHTML = totalPriceAmount;
+        }));
+    }
+    function changeAmount() {
+        const checkedInput = parseInt(document.querySelector('.options__input[name="photo"]:checked').value), priceCurrent = document.querySelector("#price-options");
+        priceCurrent.innerHTML = checkedInput;
+    }
+    if (document.querySelector('.options__input[name="photo"]')) changeAmount();
     const videoInit = selector => {
         const videos = document.querySelectorAll(`${selector}`);
         if (videos.length > 0) videos.forEach((video => {
@@ -3802,7 +3826,6 @@
     menuInit();
     spollers();
     showMore();
-    formQuantity();
     pageNavigation();
     headerScroll();
 })();
