@@ -3750,7 +3750,7 @@
         const cartItems = document.querySelectorAll(".item-calc-js");
         let totalPriceAmount = 0;
         cartItems.forEach((item => {
-            const amountEl = parseInt(item.querySelector(".js-price").textContent), valueElement = parseInt(item.querySelector("[data-quantity-value]").value), totalPrice = document.querySelector(".js-total span"), currentPrice = valueElement * amountEl;
+            const amountEl = parseInt(item.querySelector(".js-price").textContent.replaceAll(" ", "")), valueElement = parseInt(item.querySelector("[data-quantity-value]").value), totalPrice = document.querySelector(".js-total span"), currentPrice = valueElement * amountEl;
             totalPriceAmount += currentPrice;
             totalPrice.innerHTML = totalPriceAmount;
         }));
